@@ -1,0 +1,70 @@
+* {
+  font-family: 'Fjalla One', sans-serif;
+}
+
+main {
+  height: 100vh;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255,0,0);
+  background: linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(240,14,14,1) 25%, rgba(226,26,26,1) 50%, rgba(226,58,58,1) 75%, rgba(226,82,82,1) 100%); */
+}
+
+#side-panel {
+  width: 16vw;
+  background: rgb(22, 22, 26);
+  background: linear-gradient(180deg, rgba(22, 22, 26, 1) 0%, rgba(38, 38, 45, 1) 83%, rgba(38, 38, 45, 1) 100%);
+}
+
+#content {
+  width: 84vw;
+  background-color: #26262d;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  margin-top: 20vh;
+}
+
+ul li:nth-child(1) a {
+  color: #fffffe;
+}
+
+ul li:nth-child(1) span {
+  color: #fffffe;
+}
+
+.side-panel-list {
+  list-style: none;
+}
+
+.side-panel-list span {
+  color: #94a1b2;
+}
+
+.side-panel-list a {
+  text-decoration: none;
+  color: #94a1b2;
+}
+
+#content h1 {
+  color: #fffffe;
+}
+
+#content .upper {
+  margin: 3rem;
+}
+
+#content .bottom {
+  margin: 3rem;
+  color: #94a1b2;
+}
+
+.count-box {
+  background-color: white;
+  color: black;
+  width: 10rem;
+  padding: 1rem;
+}

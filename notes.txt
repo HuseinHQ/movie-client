@@ -1,0 +1,8 @@
+Color pallete:
+https://www.happyhues.co/palettes/4
+
+UI References:
+- Login:
+  https://dribbble.com/shots/16473495-Login-Page
+- Dashboard:
+  https://dribbble.com/shots/5247254/attachments/1139091?mode=media
