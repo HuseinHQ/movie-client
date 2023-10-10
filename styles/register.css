@@ -7,8 +7,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(255,0,0);
-  background: linear-gradient(45deg, rgba(255,0,0,1) 0%, rgba(240,14,14,1) 25%, rgba(226,26,26,1) 50%, rgba(226,58,58,1) 75%, rgba(226,82,82,1) 100%);
+  background: rgb(22, 22, 26);
+  background: linear-gradient(45deg, rgba(22, 22, 26, 1) 0%, rgba(38, 38, 45, 1) 100%);
 }
 
 form {
