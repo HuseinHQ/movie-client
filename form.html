@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="width=device-width, initial-scale=1.0">
   <title>New Movie</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,26 +55,26 @@
 
       <!-- Bottom content -->
       <div class="bottom d-flex gap-3">
-        <form class="d-flex w-100 gap-4">
+        <form @submit.prevent="submitNewMovie" class="d-flex w-100 gap-4">
           <!-- Left Div -->
           <div class="w-50">
             <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" name="title" id="new-movie-title" class="form-control" autofocus>
+              <label class="form-label">Title</label>
+              <input v-model="title" type="text" class="form-control" autofocus>
             </div>
   
             <div class="mb-3">
-              <label for="synopsis" class="form-label">Synopsis</label>
-              <textarea name="synopsis" id="new-movie-synopsis" class="form-control" rows="4"></textarea>
+              <label class="form-label">Synopsis</label>
+              <textarea v-model="synopsis" class="form-control" rows="4"></textarea>
             </div>
   
             <div class="mb-5">
-              <label for="genreId" class="form-label">Genre</label>
-              <select name="genreId" id="new-movie-genre" class="form-select">
+              <label class="form-label">Genre</label>
+              <select v-model="genreId" class="form-select">
                 <option selected disabled>-- Select Genre --</option>
-                <option value="">Action</option>
-                <option value="">Romance</option>
-                <option value="">Horror</option>
+                <option value="1">Action</option>
+                <option value="2">Romance</option>
+                <option value="3">Horror</option>
               </select>
             </div>
 
@@ -86,23 +86,50 @@
           <!-- Right Div -->
           <div class="w-50">
             <div class="mb-3">
-              <label for="rating" class="form-label">Rating</label>
-              <input type="number" name="rating" id="new-movie-rating" class="form-control">
+              <label class="form-label">Rating</label>
+              <input v-model="rating" type="number" class="form-control">
             </div>
   
             <div class="mb-3">
-              <label for="trailerUrl" class="form-label">Trailer Url</label>
-              <input type="text" name="trailerUrl" id="new-movie-trailerUrl" class="form-control">
+              <label class="form-label">Trailer Url</label>
+              <input v-model="trailerUrl" type="text" class="form-control">
             </div>
             
             <div class="mb-3">
-              <label for="imgUrl" class="form-label">Image Url</label>
-              <input type="text" name="imgUrl" id="new-movie-imgUrl" class="form-control">
+              <label class="form-label">Image Url</label>
+              <input v-model="imgUrl" type="text" class="form-control">
             </div>
           </div>
         </form>
       </div>
     </div>
   </main>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp } = Vue
+    createApp({
+      data() {
+        return {
+          title: '',
+          synopsis: '',
+          genreId: '',
+          rating: null,
+          trailerUrl: '',
+          imgUrl: ''
+        }
+      },
+      methods: {
+        submitNewMovie() {
+          console.log(this.title)
+          console.log(this.synopsis)
+          console.log(this.genreId)
+          console.log(this.rating)
+          console.log(this.trailerUrl)
+          console.log(this.imgUrl)
+        }
+      }
+    }).mount('main')
+  </script>
 </body>
 </html>

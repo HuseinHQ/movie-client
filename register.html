@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta idth, initial-scale=1.0">
   <title>Register Page</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 
 <body>
   <main>
-    <form class="rounded-3 p-2">
+    <form @submit.prevent="submitRegisterForm" class="rounded-3 p-2">
       <div class="d-flex flex-wrap rounded-3 p-3 h-100 gap-2 justify-content-around" style="background-color: white;">
         <!-- Upper div -->
         <div style="width: 100%;">
@@ -30,35 +30,35 @@
         <!-- Left Div -->
         <div style="width: 45%;">
           <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" name="username" id="login-username" class="form-control" autofocus>
+            <label class="form-label">Username</label>
+            <input v-model="username" type="text" class="form-control" autofocus>
           </div>
 
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" name="email" id="login-email" class="form-control">
+            <label class="form-label">Email</label>
+            <input v-model="email" type="text" class="form-control">
           </div>
 
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="text" name="password" id="login-password" class="form-control">
+            <label class="form-label">Password</label>
+            <input v-model="password" type="text" class="form-control">
           </div>
         </div>
 
         <!-- Right Div -->
         <div style="width: 45%;">
           <div class="mb-3">
-            <label for="phoneNumber" class="form-label">Phone Number</label>
-            <input type="text" name="phoneNumber" id="login-phoneNumber" class="form-control">
+            <label class="form-label">Phone Number</label>
+            <input v-model="phoneNumber" type="text" class="form-control">
           </div>
 
           <div class="mb-5">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" name="address" id="login-address" class="form-control">
+            <label class="form-label">Address</label>
+            <input v-model="address" type="text" class="form-control">
           </div>
 
-          <div class="mb-3 d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary rounded-5" style="width: 100%;">Register</button>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary rounded-5 w-100">Register</button>
           </div>
   
           <p class="text-center text-secondary">or Sign up with</p>
@@ -71,6 +71,32 @@
       </div>
     </form>
   </main>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          username: '',
+          email: '',
+          password: '',
+          phoneNumber: '',
+          address: ''
+        }
+      },
+      methods: {
+        submitRegisterForm() {
+          console.log(this.username)
+          console.log(this.email)
+          console.log(this.password)
+          console.log(this.phoneNumber)
+          console.log(this.address)
+        }
+      }
+    }).mount('main')
+  </script>
 </body>
 
 </html>

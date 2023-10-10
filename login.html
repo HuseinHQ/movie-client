@@ -28,19 +28,19 @@
       <div class="col-5 right-div-login rounded-3 p-5">
           <h1 class="text-center">Welcome Back!</h1>
           <h2 class="text-center fs-5 text-secondary">Please enter your details</h2>
-          <form>
+          <form @submit.prevent="submitLoginForm">
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="text" name="email" id="login-email" class="form-control">
+              <label class="form-label">Email</label>
+              <input v-model="email" type="text" class="form-control">
             </div>
 
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="text" name="password" id="login-password" class="form-control">
+              <label class="form-label">Password</label>
+              <input v-model="password" type="text" class="form-control">
             </div>
 
             <div class="mb-3">
-              <a href="/dashboard.html" type="submit" class="btn btn-primary rounded-5 w-100">Login</a>
+              <button type="submit" class="btn btn-primary rounded-5 w-100">Login</>
             </div>
 
             <p class="text-center text-secondary">or Sign in with</p>
@@ -48,6 +48,26 @@
           <p class=" text-center mt-5" id="register-link">Don't have an account? <a href="/register.html" class="link-body-emphasis">Sign up</a></p>
       </div>
   </main>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          email: '',
+          password: ''
+        }
+      },
+      methods: {
+        submitLoginForm() {
+          console.log(this.email)
+          console.log(this.password)
+        }
+      }
+    }).mount('main')
+  </script>
 </body>
 
 </html>

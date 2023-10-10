@@ -60,15 +60,28 @@
       <div class="bottom d-flex gap-3">
         <div>
           <h2 class="fs-5">Total Movies</h2>
-          <div class="border rounded count-box fs-1">0</div>
+          <div class="border rounded count-box fs-1">{{ movieCount }}</div>
         </div>
         <div>
           <h2 class="fs-5">Total Genres</h2>
-          <div class="border rounded count-box fs-1">0</div>
+          <div class="border rounded count-box fs-1">{{ genreCount}}</div>
         </div>
       </div>
     </div>
   </main>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return {
+          movieCount: 10,
+          genreCount: 5
+        }
+      }
+    }).mount('main')
+  </script>
 </body>
 
 </html>
