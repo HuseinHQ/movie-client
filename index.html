@@ -34,11 +34,13 @@
             <div class="mb-3">
               <label class="form-label">Email</label>
               <input v-model="loginForm.email" type="text" class="form-control">
+              <div v-if="emailErrorMessage.length" class="text-danger mt-1">{{ emailErrorMessage }}</div>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Password</label>
               <input v-model="loginForm.password" type="text" class="form-control">
+              <div v-if="passwordErrorMessage.length" class="text-danger mt-1">{{ passwordErrorMessage }}</div>
             </div>
 
             <div class="mb-3">
@@ -71,11 +73,13 @@
             <div class="mb-3">
               <label class="form-label">Email</label>
               <input v-model="registerForm.email" type="text" class="form-control">
+              <div v-if="emailErrorMessage.length" class="text-danger mt-1">{{ emailErrorMessage }}</div>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Password</label>
               <input v-model="registerForm.password" type="text" class="form-control">
+              <div v-if="passwordErrorMessage.length" class="text-danger mt-1">{{ passwordErrorMessage }}</div>
             </div>
           </div>
 
@@ -127,7 +131,7 @@
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-user"></i>
-            <a href="">New Movie</a>
+            <a @click.prevent="changePage('newMovie')" href="">New Movie</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-right-from-bracket"></i>

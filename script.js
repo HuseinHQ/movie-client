@@ -5,6 +5,8 @@ createApp({
     return {
       baseURL: "https://movie-server.huseinhk.me",
       page: "login",
+      passwordErrorMessage: "",
+      emailErrorMessage: "",
       loginForm: {
         email: "",
         password: "",
@@ -114,11 +116,52 @@ createApp({
   },
   created() {
     if (localStorage.getItem("access_token")) {
+      this.fetchMovies();
+      this.fetchGenres();
       this.page = "dashboard";
     }
   },
-  mounted() {
-    this.fetchMovies();
-    this.fetchGenres();
+  watch: {
+    "loginForm.email"(newValue, oldValue) {
+      if (!newValue.includes("@")) {
+        this.emailErrorMessage = "Input type is not email";
+      } else {
+        this.emailErrorMessage = "";
+      }
+      if (!newValue.length) {
+        this.emailErrorMessage = "";
+      }
+    },
+    "registerForm.email"(newValue, oldValue) {
+      if (!newValue.includes("@")) {
+        this.emailErrorMessage = "Input type is not email";
+      } else {
+        this.emailErrorMessage = "";
+      }
+      if (!newValue.length) {
+        this.emailErrorMessage = "";
+      }
+    },
+    "loginForm.password"(newValue, oldValue) {
+      if (newValue.length < 5) {
+        this.passwordErrorMessage = "Minimum length of password must be 5";
+      } else {
+        this.passwordErrorMessage = "";
+      }
+      if (!newValue.length) {
+        this.passwordErrorMessage = "";
+      }
+    },
+    "registerForm.password"(newValue, oldValue) {
+      if (newValue.length < 5) {
+        this.passwordErrorMessage = "Minimum length of password is 5";
+        console.log("ha");
+      } else {
+        this.passwordErrorMessage = "";
+      }
+      if (!newValue.length) {
+        this.passwordErrorMessage = "";
+      }
+    },
   },
 }).mount("#app");
