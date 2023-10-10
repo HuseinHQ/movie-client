@@ -7,8 +7,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(22, 22, 26);
-  background: linear-gradient(45deg, rgba(22, 22, 26, 1) 0%, rgba(38, 38, 45, 1) 100%);
+  background: rgb(38, 38, 45);
+  background: linear-gradient(45deg, rgba(38, 38, 45, 1) 0%, rgba(56, 58, 66, 1) 43%, rgba(67, 71, 80, 1) 59%, rgba(74, 79, 89, 1) 71%, rgba(90, 97, 109, 1) 81%, rgba(115, 124, 139, 1) 93%, rgba(148, 161, 178, 1) 100%);
 }
 
 .login-div-container {
