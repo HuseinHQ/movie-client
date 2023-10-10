@@ -148,7 +148,7 @@ createApp({
   },
   watch: {
     "loginForm.email"(newValue, oldValue) {
-      if (!newValue.includes("@")) {
+      if (!newValue.includes("@") || !newValue.includes(".")) {
         this.emailErrorMessage = "Input type is not email";
       } else {
         this.emailErrorMessage = "";
@@ -158,7 +158,7 @@ createApp({
       }
     },
     "registerForm.email"(newValue, oldValue) {
-      if (!newValue.includes("@")) {
+      if (!newValue.includes("@") || !newValue.includes(".")) {
         this.emailErrorMessage = "Input type is not email";
       } else {
         this.emailErrorMessage = "";
