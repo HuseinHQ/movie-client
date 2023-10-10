@@ -35,6 +35,11 @@ createApp({
       this.page = page;
       localStorage.setItem("lastAccessedPage", this.page);
     },
+    wipeData(obj) {
+      for (key in obj) {
+        key = "";
+      }
+    },
     async submitLoginForm() {
       try {
         const response = await axios({
@@ -46,6 +51,7 @@ createApp({
         const { access_token } = response.data;
         localStorage.access_token = access_token;
 
+        this.wipeData(this.loginForm);
         this.fetchMovies();
         this.fetchGenres();
         this.page = "dashboard";
@@ -73,6 +79,7 @@ createApp({
         const { access_token } = response.data;
         localStorage.access_token = access_token;
 
+        this.wipeData(this.registerForm);
         this.fetchMovies();
         this.fetchGenres();
         this.page = "dashboard";
@@ -92,7 +99,7 @@ createApp({
         });
 
         await this.fetchMovies();
-        console.log(data);
+        this.wipeData(this.newMovie);
       } catch (error) {
         console.log(error);
       }
