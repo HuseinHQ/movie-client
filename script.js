@@ -33,6 +33,7 @@ createApp({
   methods: {
     changePage(page) {
       this.page = page;
+      localStorage.setItem("lastAccessedPage", this.page);
     },
     async submitLoginForm() {
       try {
@@ -79,9 +80,26 @@ createApp({
         console.log(error);
       }
     },
+    async submitNewMovie() {
+      try {
+        const { data } = await axios({
+          method: "post",
+          url: this.baseURL + "/movies",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: this.newMovie,
+        });
+
+        await this.fetchMovies();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     logout() {
       localStorage.removeItem("access_token");
-      this.page = "login";
+      this.changePage("login");
     },
     async fetchMovies() {
       try {
@@ -118,7 +136,7 @@ createApp({
     if (localStorage.getItem("access_token")) {
       this.fetchMovies();
       this.fetchGenres();
-      this.page = "dashboard";
+      this.page = localStorage.getItem("lastAccessedPage");
     }
   },
   watch: {
@@ -162,6 +180,14 @@ createApp({
       if (!newValue.length) {
         this.passwordErrorMessage = "";
       }
+    },
+  },
+  computed: {
+    movieCount() {
+      return this.movies.length;
+    },
+    genreCount() {
+      return this.genres.length;
     },
   },
 }).mount("#app");

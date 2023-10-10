@@ -119,15 +119,15 @@
         <ul class="d-flex flex-column gap-3">
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-chart-line"></i>
-            <a href="">Dashboard</a>
+            <a @click.prevent="changePage('dashboard')" href="">Dashboard</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-film"></i>
-            <a @click.prevent="fetchMovies" href="">Movies</a>
+            <a @click.prevent="changePage('movies')" href="">Movies</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-genderless"></i>
-            <a @click.prevent="fetchGenres" href="">Genre</a>
+            <a @click.prevent="changePage('genres')" href="">Genre</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-user"></i>
@@ -151,11 +151,11 @@
         <div class="bottom d-flex gap-3">
           <div>
             <h2 class="fs-5">Total Movies</h2>
-            <div class="border rounded count-box fs-1">{{ movies.length }}</div>
+            <div class="border rounded count-box fs-1">{{ movieCount }}</div>
           </div>
           <div>
             <h2 class="fs-5">Total Genres</h2>
-            <div class="border rounded count-box fs-1">{{ genres.length }}</div>
+            <div class="border rounded count-box fs-1">{{ genreCount }}</div>
           </div>
         </div>
       </div>
@@ -169,19 +169,19 @@
         <ul class="d-flex flex-column gap-3">
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-chart-line"></i>
-            <a href="">Dashboard</a>
+            <a @click.prevent="changePage('dashboard')" href="">Dashboard</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-film"></i>
-            <a @click.prevent="fetchMovies" href="">Movies</a>
+            <a @click.prevent="changePage('movies')" href="">Movies</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-genderless"></i>
-            <a @click.prevent="fetchGenres" href="">Genre</a>
+            <a @click.prevent="changePage('genres')" href="">Genre</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-user"></i>
-            <a href="">New Movie</a>
+            <a @click.prevent="changePage('newMovie')" href="">New Movie</a>
           </li>
           <li class="fs-5 side-panel-list d-flex gap-2">
             <i class="fa-solid fa-right-from-bracket"></i>
@@ -204,17 +204,17 @@
             <div class="w-50">
               <div class="mb-3">
                 <label class="form-label">Title</label>
-                <input v-model="title" type="text" class="form-control" autofocus>
+                <input v-model="newMovie.title" type="text" class="form-control" autofocus>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Synopsis</label>
-                <textarea v-model="synopsis" class="form-control" rows="4"></textarea>
+                <textarea v-model="newMovie.synopsis" class="form-control" rows="4"></textarea>
               </div>
 
               <div class="mb-5">
                 <label class="form-label">Genre</label>
-                <select v-model="genreId" class="form-select">
+                <select v-model="newMovie.genreId" class="form-select">
                   <option selected disabled>-- Select Genre --</option>
                   <option value="1">Action</option>
                   <option value="2">Romance</option>
@@ -231,17 +231,17 @@
             <div class="w-50">
               <div class="mb-3">
                 <label class="form-label">Rating</label>
-                <input v-model="rating" type="number" class="form-control">
+                <input v-model="newMovie.rating" type="number" class="form-control">
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Trailer Url</label>
-                <input v-model="trailerUrl" type="text" class="form-control">
+                <input v-model="newMovie.trailerUrl" type="text" class="form-control">
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Image Url</label>
-                <input v-model="imgUrl" type="text" class="form-control">
+                <input v-model="newMovie.imgUrl" type="text" class="form-control">
               </div>
             </div>
           </form>
