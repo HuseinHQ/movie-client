@@ -55,20 +55,20 @@ export default {
         console.log(error);
       }
     },
-    async submitRegisterForm() {
+    async submitRegisterForm(registerForm) {
       try {
         await axios({
           method: "post",
           url: this.baseURL + "/register",
-          data: this.registerForm,
+          data: registerForm,
         });
 
         const response = await axios({
           method: "post",
           url: this.baseURL + "/login",
           data: {
-            email: this.registerForm.email,
-            password: this.registerForm.password,
+            email: registerForm.email,
+            password: registerForm.password,
           },
         });
 
@@ -143,7 +143,7 @@ export default {
 
 <template>
   <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" />
-  <Register v-else-if="page === 'register'" @submitHandle="submitRegisterForm" @page="changePage" />
+  <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
   <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" />
   <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />

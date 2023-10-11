@@ -80,7 +80,7 @@ export default {
         <div style="width: 45%;">
           <div class="mb-3">
             <label class="form-label">Phone Number</label>
-            <input v-model="registerForm.phoneNumber" type="text" class="form-control">
+            <input v-model="registerForm.phoneNumber" type="number" class="form-control">
           </div>
 
           <div class="mb-5">
