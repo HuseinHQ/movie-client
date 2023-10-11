@@ -48,6 +48,7 @@
             </div>
 
             <p class="text-center text-secondary">or Sign in with</p>
+            <div id="buttonDiv" class="d-flex justify-content-center"></div>
           </form>
           <p class=" text-center mt-5">Don't have an account? <a @click.prevent="changePage('register')" href="" class="link-body-emphasis">Sign up</a></p>
         </div>
@@ -100,6 +101,7 @@
             </div>
 
             <p class="text-center text-secondary">or Sign up with</p>
+            <div id="buttonDiv" class="d-flex justify-content-center"></div>
           </div>
 
           <!-- Bottom div -->
@@ -251,6 +253,8 @@
   </div>
 
   <!-- SCRIPTS -->
+  <!-- Google oauth -->
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/f8d07e81f8.js" crossorigin="anonymous"></script>
   <!-- Vue -->

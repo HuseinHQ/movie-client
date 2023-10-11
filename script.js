@@ -1,5 +1,17 @@
 const { createApp } = Vue;
 
+// window.onload = function () {
+//   google.accounts.id.initialize({
+//     client_id: "782243135980-7dfmhrfqah531g5ob5u200trjrkl0ah2.apps.googleusercontent.com",
+//     callback: this.handleCredentialResponse,
+//   });
+//   google.accounts.id.renderButton(
+//     document.getElementById("buttonDiv"),
+//     { theme: "outline", size: "large" } // customization attributes
+//   );
+//   google.accounts.id.prompt(); // also display the One Tap dialog
+// };
+
 createApp({
   data() {
     return {
@@ -38,6 +50,24 @@ createApp({
     wipeData(obj) {
       for (key in obj) {
         key = "";
+      }
+    },
+    async handleCredentialResponse(response) {
+      try {
+        const res = await axios({
+          method: "post",
+          url: this.baseURL + "/google-login",
+          headers: {
+            google_token: response.credential,
+          },
+        });
+
+        localStorage.setItem("access_token", res.data.access_token);
+        this.fetchMovies();
+        this.fetchGenres();
+        this.changePage("dashboard");
+      } catch (error) {
+        console.log(error);
       }
     },
     async submitLoginForm() {
@@ -196,5 +226,31 @@ createApp({
     genreCount() {
       return this.genres.length;
     },
+  },
+  mounted() {
+    if (this.page === "login" || this.page === "register") {
+      google.accounts.id.initialize({
+        client_id: "782243135980-7dfmhrfqah531g5ob5u200trjrkl0ah2.apps.googleusercontent.com",
+        callback: this.handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" } // customization attributes
+      );
+      google.accounts.id.prompt(); // also display the One Tap dialog
+    }
+  },
+  updated() {
+    if (this.page === "login" || this.page === "register") {
+      google.accounts.id.initialize({
+        client_id: "782243135980-7dfmhrfqah531g5ob5u200trjrkl0ah2.apps.googleusercontent.com",
+        callback: this.handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" } // customization attributes
+      );
+      google.accounts.id.prompt(); // also display the One Tap dialog
+    }
   },
 }).mount("#app");
