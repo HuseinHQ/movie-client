@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard.vue'
 import Movies from './pages/Movies.vue'
 import Genres from './pages/Genres.vue'
 import NewMovie from './pages/NewMovie.vue'
+import EditMovie from './pages/EditMovie.vue'
 import axios from 'axios'
 
 export default {
@@ -14,7 +15,8 @@ export default {
     Dashboard,
     Movies,
     Genres,
-    NewMovie
+    NewMovie,
+    EditMovie,
   },
   data() {
     return {
@@ -22,12 +24,18 @@ export default {
       page: "login",
       movies: [],
       genres: [],
+      movieId: 0
     }
   },
   methods: {
-    changePage(page) {
+    changePage(page, id) {
+      if(id) {
+        this.movieId = id;
+      }
       this.page = page;
-      localStorage.setItem("lastAccessedPage", this.page);
+      if(!this.page === 'newMovie' && !this.page === 'editMovie') {
+        localStorage.setItem("lastAccessedPage", this.page);
+      }
     },
     async patchMovieStatus(id, status) {
       try {
@@ -63,7 +71,7 @@ export default {
 
         this.fetchMovies();
         this.fetchGenres();
-        this.page = "dashboard";
+        this.changePage('dashoard');
       } catch (error) {
         console.log(error);
       }
@@ -91,7 +99,7 @@ export default {
         // this.wipeData(this.registerForm);
         this.fetchMovies();
         this.fetchGenres();
-        this.page = "dashboard";
+        this.changePage('dashboard');
       } catch (error) {
         console.log(error);
       }
@@ -108,9 +116,26 @@ export default {
         });
 
         await this.fetchMovies();
-        this.page = 'movies'
+        this.changePage('movies')
       } catch (error) {
         console.log(error);
+      }
+    },
+    async submitEditMovie(editedMovie, id) {
+      try {
+        await axios({
+          method: 'put',
+          url: this.baseURL + '/movies/' + id,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: editedMovie
+        })
+
+        await this.fetchMovies();
+        this.changePage('movies')
+      } catch (error) {
+        console.log(error)
       }
     },
     async fetchMovies() {
@@ -151,6 +176,11 @@ export default {
       this.page = localStorage.getItem("lastAccessedPage");
     }
   },
+  computed: {
+    getMovieById() {
+      return this.movies.find(movie => movie.id == this.movieId)
+    }
+  }
 }
 </script>
 
@@ -158,9 +188,11 @@ export default {
   <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" />
   <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
-  <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus" />
+  <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus"
+    @editMoviePage="changePage" />
   <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />
-  <NewMovie v-else @submitHandler="submitNewMovie" @page="changePage" />
+  <NewMovie v-else-if="page === 'newMovies'" @page="changePage" :genres="genres" @submitHandler="submitNewMovie" />
+  <EditMovie v-else @page="changePage" :movie="getMovieById" :genres="genres" @submitHandler="submitEditMovie" />
 </template>
 
 <style>

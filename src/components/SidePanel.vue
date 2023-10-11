@@ -2,7 +2,6 @@
 export default {
   methods: {
     changePage(page) {
-      console.log(page)
       this.$emit('page', page)
     },
     logout(page) {
@@ -31,7 +30,7 @@ export default {
       </li>
       <li class="fs-5 side-panel-list d-flex gap-2">
         <i class="fa-solid fa-user"></i>
-        <a @click.prevent="changePage('newMovie')" href="">New Movie</a>
+        <a @click.prevent="" href="">Hello, User</a>
       </li>
       <li class="fs-5 side-panel-list d-flex gap-2">
         <i class="fa-solid fa-right-from-bracket"></i>

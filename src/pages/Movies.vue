@@ -19,6 +19,9 @@ export default {
     },
     changeHandler(id, status) {
       this.$emit('changeHandler', id, status)
+    },
+    editMoviePage(page, id) {
+      this.$emit('editMoviePage', page, id)
     }
   }
 }
@@ -32,8 +35,9 @@ export default {
     <!-- Content -->
     <div id="content">
       <!-- Upper content -->
-      <div class="upper d-flex">
+      <div class="upper d-flex align-items-center justify-content-between">
         <h1>Movie List</h1>
+        <button @click="changePage('newMovies')" class="btn btn-primary">Add Movie</button>
       </div>
 
       <!-- Bottom content -->
@@ -55,7 +59,7 @@ export default {
             </thead>
             <tbody>
               <tr v-for="data, index in datas">
-                <TableItem :data=data :index="index" page="movies" @changeHandler="changeHandler" />
+                <TableItem :data=data :index="index" page="movies" @changeHandler="changeHandler" @editMoviePage="editMoviePage" />
               </tr>
             </tbody>
           </table>

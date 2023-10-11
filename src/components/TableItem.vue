@@ -9,6 +9,9 @@ export default {
   methods: {
     changeHandler(id, status) {
       this.$emit('changeHandler', id, status)
+    },
+    editMoviePage(page, id) {
+      this.$emit('editMoviePage', page, id)
     }
   }
 }
@@ -31,6 +34,7 @@ export default {
       <option value="Archived" :selected="data.status ==='Archived'" :disabled="data.status === 'Archived'">Archived</option>
     </select>
   </td>
+  <td v-if="page === 'movies'"><a @click.prevent="editMoviePage('editMovie', data.id)" href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
 
   <!-- Genres -->
   <td v-if="page === 'genres'">{{ index + 1 }}</td>

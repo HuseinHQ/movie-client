@@ -3,31 +3,19 @@ import SidePanel from '../components/SidePanel.vue'
 import MovieForm from '../components/MovieForm.vue'
 
 export default {
-  props: ['genres'],
+  props: ['movie', 'genres'],
   components: {
     SidePanel,
     MovieForm
-  },
-  data() {
-    return {
-      movie: {
-        title: "",
-        synopsis: "",
-        genreId: "",
-        rating: null,
-        trailerUrl: "",
-        imgUrl: "",
-      },
-    }
   },
   methods: {
     changePage(page) {
       this.$emit('page', page)
     },
-    submitHandler() {
-      this.$emit('submitHandler', this.newMovie)
+    submitHandler(editedMovie, id) {
+      this.$emit('submitHandler', editedMovie, id)
     }
-  }
+  },
 }
 </script>
 
@@ -40,7 +28,7 @@ export default {
     <div id="content">
       <!-- Upper content -->
       <div class="upper d-flex">
-        <h1>New Movie</h1>
+        <h1>Edit Movie</h1>
       </div>
 
       <!-- Bottom content -->
