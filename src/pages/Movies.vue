@@ -1,12 +1,12 @@
 <script>
 import SidePanel from '../components/SidePanel.vue'
-import TableRow from '../components/TableRow.vue'
+import TableItem from '../components/TableItem.vue'
 
 export default {
   props: ['datas'],
   components: {
     SidePanel,
-    TableRow
+    TableItem
   },
   data() {
     return {
@@ -16,6 +16,9 @@ export default {
   methods: {
     changePage(page) {
       this.$emit('page', page)
+    },
+    changeHandler(id, status) {
+      this.$emit('changeHandler', id, status)
     }
   }
 }
@@ -35,7 +38,7 @@ export default {
 
       <!-- Bottom content -->
       <div class="bottom d-flex gap-3">
-        <div class="container bg-light rounded movie-table">
+        <div class="container bg-light rounded movie-table p-1">
           <table class="table">
             <thead>
               <tr>
@@ -51,7 +54,9 @@ export default {
               </tr>
             </thead>
             <tbody>
-              <TableRow :datas="datas" :column="movieTd" />
+              <tr v-for="data, index in datas">
+                <TableItem :data=data :index="index" page="movies" @changeHandler="changeHandler" />
+              </tr>
             </tbody>
           </table>
         </div>

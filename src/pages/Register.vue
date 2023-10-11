@@ -19,6 +19,12 @@ export default {
     },
     submitHandler() {
       this.$emit('submitHandler', this.registerForm)
+      this.wipeData(this.registerForm)
+    },
+    wipeData(obj) {
+      for (key in obj) {
+        key = "";
+      }
     },
   },
   watch: {

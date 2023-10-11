@@ -29,11 +29,24 @@ export default {
       this.page = page;
       localStorage.setItem("lastAccessedPage", this.page);
     },
-    // wipeData(obj) {
-    //   for (key in obj) {
-    //     key = "";
-    //   }
-    // },
+    async patchMovieStatus(id, status) {
+      try {
+        await axios({
+          method: 'patch',
+          url: this.baseURL + '/movies/' + id,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: {
+            status
+          }
+        })
+
+        this.fetchMovies()
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async submitLoginForm(email, password) {
       try {
         const response = await axios({
@@ -145,7 +158,7 @@ export default {
   <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" />
   <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
-  <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" />
+  <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus" />
   <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />
   <NewMovie v-else @submitHandler="submitNewMovie" @page="changePage" />
 </template>
