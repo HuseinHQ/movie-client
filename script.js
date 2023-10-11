@@ -1,17 +1,5 @@
 const { createApp } = Vue;
 
-// window.onload = function () {
-//   google.accounts.id.initialize({
-//     client_id: "782243135980-7dfmhrfqah531g5ob5u200trjrkl0ah2.apps.googleusercontent.com",
-//     callback: this.handleCredentialResponse,
-//   });
-//   google.accounts.id.renderButton(
-//     document.getElementById("buttonDiv"),
-//     { theme: "outline", size: "large" } // customization attributes
-//   );
-//   google.accounts.id.prompt(); // also display the One Tap dialog
-// };
-
 createApp({
   data() {
     return {
