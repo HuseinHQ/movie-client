@@ -3,6 +3,7 @@ import SidePanel from '../components/SidePanel.vue'
 import TableItem from '../components/TableItem.vue'
 
 export default {
+  emits: ['page'],
   props: ['datas'],
   components: {
     SidePanel,
@@ -44,7 +45,7 @@ export default {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="data, index in datas">
+              <tr v-for="data, index in datas" :key="data.id">
                 <TableItem :data=data :index="index" page="genres" />
               </tr>
             </tbody>

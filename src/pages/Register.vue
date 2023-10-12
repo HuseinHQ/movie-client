@@ -1,5 +1,6 @@
 <script>
 export default {
+  emits: ['page', 'submitHandler'],
   data() {
     return {
       passwordErrorMessage: "",

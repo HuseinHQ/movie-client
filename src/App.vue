@@ -72,7 +72,7 @@ export default {
 
         this.fetchMovies();
         this.fetchGenres();
-        this.changePage('dashoard');
+        this.changePage('dashboard');
       } catch (error) {
         console.log(error);
       }

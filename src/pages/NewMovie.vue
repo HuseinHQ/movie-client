@@ -3,6 +3,7 @@ import SidePanel from '../components/SidePanel.vue'
 import MovieForm from '../components/MovieForm.vue'
 
 export default {
+  emits: ['page', 'submitHandler'],
   props: ['genres'],
   components: {
     SidePanel,
@@ -45,7 +46,7 @@ export default {
 
       <!-- Bottom content -->
       <div class="bottom d-flex gap-3">
-        <MovieForm :movie="movie" :genres="genres" @submitHandler="submitHandler" :buttonTitle="['Cancel', 'Add']" :buttonColor="['btn-outline-primary', 'btn-primary']" />
+        <MovieForm @changePage="changePage" :movie="movie" :genres="genres" @submitHandler="submitHandler" :buttonTitle="['Cancel', 'Add']" :buttonColor="['btn-outline-primary', 'btn-primary']" />
       </div>
     </div>
   </section>

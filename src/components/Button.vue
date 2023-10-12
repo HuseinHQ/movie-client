@@ -5,12 +5,18 @@ export default {
     return {
       prevPage: localStorage.getItem('prevPage')
     }
+  },
+  methods: {
+    changePage(page) {
+      this.$emit('changePage', page)
+    }
   }
 }
 </script>
 
 <template>
-  <button type="submit" :class="'btn rounded w-50 ' + buttonColor">{{ title }}</button>
+  <button v-if="title === 'Cancel'" @click="changePage(prevPage)" :class="'btn rounded w-50 ' + buttonColor">{{ title }}</button>
+  <button v-else type="submit" :class="'btn rounded w-50 ' + buttonColor">{{ title }}</button>
 </template>
 
 <style scoped></style>

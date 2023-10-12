@@ -1,6 +1,7 @@
 <script>
 import SidePanel from '../components/SidePanel.vue'
 export default {
+  emits: ['page'],
   props: ['movies', 'genres'],
   components: {
     SidePanel

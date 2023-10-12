@@ -1,5 +1,6 @@
 <script>
 export default {
+  emits: ['page'],
   methods: {
     changePage(page) {
       this.$emit('page', page)

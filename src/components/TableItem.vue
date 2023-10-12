@@ -1,5 +1,6 @@
 <script>
 export default {
+  emits: ['changeHandler', 'editMoviePage'],
   props: ['data', 'index', 'page'],
   data() {
     return {
@@ -18,8 +19,9 @@ export default {
 </script>
 
 <template>
+  <td>{{ index + 1 }}</td>
+
   <!-- Movies -->
-  <td v-if="page === 'movies'">{{ index + 1 }}</td>
   <td v-if="page === 'movies'">{{ data.title }}</td>
   <td v-if="page === 'movies'">{{ data.synopsis }}</td>
   <td v-if="page === 'movies'">{{ data.trailerUrl }}</td>
@@ -37,7 +39,6 @@ export default {
   <td v-if="page === 'movies'"><a @click.prevent="editMoviePage('editMovie', data.id)" href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
 
   <!-- Genres -->
-  <td v-if="page === 'genres'">{{ index + 1 }}</td>
   <td v-if="page === 'genres'">{{ data.name }}</td>
 </template>
 

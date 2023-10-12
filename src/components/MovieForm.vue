@@ -2,6 +2,7 @@
 import Button from './Button.vue';
 
 export default {
+  emits: ['submitHandler', 'changePage'],
   components: {
     Button
   },
@@ -22,6 +23,9 @@ export default {
   methods: {
     submitHandler() {
       this.$emit('submitHandler', this.newMovie, this.id)
+    },
+    changePage(page) {
+      this.$emit('changePage', page)
     }
   },
   created() {
@@ -53,7 +57,7 @@ export default {
       </div>
 
       <div class="d-flex gap-3">
-        <Button :title="buttonTitle[0]" :buttonColor="buttonColor[0]"/>
+        <Button @changePage="changePage" :title="buttonTitle[0]" :buttonColor="buttonColor[0]"/>
         <Button :title="buttonTitle[1]" :buttonColor="buttonColor[1]"/>
       </div>
     </div>

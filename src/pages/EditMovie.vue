@@ -3,6 +3,7 @@ import SidePanel from '../components/SidePanel.vue'
 import MovieForm from '../components/MovieForm.vue'
 
 export default {
+  emits: ['page', 'submitHandler'],
   props: ['movie', 'genres'],
   components: {
     SidePanel,
