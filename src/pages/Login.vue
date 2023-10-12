@@ -53,7 +53,25 @@ export default {
     },
     submitHandler() {
       this.$emit('submitHandler', this.email, this.password)
-    }
+    },
+    async handleCredentialResponse(response) {
+      try {
+        const res = await axios({
+          method: "post",
+          url: this.baseURL + "/google-login",
+          headers: {
+            google_token: response.credential,
+          },
+        });
+
+        localStorage.setItem("access_token", res.data.access_token);
+        this.fetchMovies();
+        this.fetchGenres();
+        this.changePage("dashboard");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   watch: {
     "email"(newValue, oldValue) {
@@ -76,7 +94,20 @@ export default {
         this.passwordErrorMessage = "";
       }
     }
-  }
+  },
+  mounted() {
+    if (localStorage.getItem('lastAccessedPage') === "login" || localStorage.getItem('lastAccessedPage') === "register") {
+      google.accounts.id.initialize({
+        client_id: "782243135980-7dfmhrfqah531g5ob5u200trjrkl0ah2.apps.googleusercontent.com",
+        callback: this.handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" } // customization attributes
+      );
+      google.accounts.id.prompt(); // also display the One Tap dialog
+    }
+  },
 }
 </script>
 

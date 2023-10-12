@@ -4,17 +4,24 @@ import Register from './pages/Register.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Movies from './pages/Movies.vue'
 import Genres from './pages/Genres.vue'
+import Logs from './pages/Logs.vue'
 import NewMovie from './pages/NewMovie.vue'
 import EditMovie from './pages/EditMovie.vue'
+import { useToast } from "vue-toastification";
 import axios from 'axios'
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast }
+  },
   components: {
     Login,
     Register,
     Dashboard,
     Movies,
     Genres,
+    Logs,
     NewMovie,
     EditMovie,
   },
@@ -24,23 +31,24 @@ export default {
       page: "login",
       movies: [],
       genres: [],
+      logs: [],
       movieId: 0
     }
   },
   methods: {
     changePage(page, id) {
-      if(id) {
+      if (id) {
         this.movieId = id;
       }
       localStorage.setItem('prevPage', this.page)
       this.page = page;
-      if(this.page !== 'newMovie' && this.page !== 'editMovie') {
+      if (this.page !== 'newMovie' && this.page !== 'editMovie') {
         localStorage.setItem("lastAccessedPage", this.page);
       }
     },
     async patchMovieStatus(id, status) {
       try {
-        await axios({
+        const {data} = await axios({
           method: 'patch',
           url: this.baseURL + '/movies/' + id,
           headers: {
@@ -51,9 +59,19 @@ export default {
           }
         })
 
-        this.fetchMovies()
+        this.fetchMovies();
+        this.toast.success(data.message, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       } catch (error) {
         console.log(error)
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async submitLoginForm(email, password) {
@@ -72,9 +90,20 @@ export default {
 
         this.fetchMovies();
         this.fetchGenres();
+        this.fetchLogs();
         this.changePage('dashboard');
+        this.toast.success("Signed in successfully!", {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       } catch (error) {
         console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async submitRegisterForm(registerForm) {
@@ -100,14 +129,25 @@ export default {
         // this.wipeData(this.registerForm);
         this.fetchMovies();
         this.fetchGenres();
+        this.fetchLogs();
         this.changePage('dashboard');
+        this.toast.success("Signed Up successfully!", {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       } catch (error) {
         console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async submitNewMovie(newMovie) {
       try {
-        const { data } = await axios({
+        await axios({
           method: "post",
           url: this.baseURL + "/movies",
           headers: {
@@ -116,10 +156,21 @@ export default {
           data: newMovie,
         });
 
-        await this.fetchMovies();
-        this.changePage('movies')
+        this.fetchMovies();
+        this.fetchLogs();
+        this.changePage('movies');
+        this.toast.success('New movie added successfully', {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       } catch (error) {
         console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async submitEditMovie(editedMovie, id) {
@@ -133,10 +184,21 @@ export default {
           data: editedMovie
         })
 
-        await this.fetchMovies();
-        this.changePage('movies')
+        this.fetchMovies();
+        this.fetchLogs();
+        this.changePage('movies');
+        this.toast.success(`Movie with id ${id} edited successfully`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       } catch (error) {
-        console.log(error)
+        console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async fetchMovies() {
@@ -152,6 +214,11 @@ export default {
         this.movies = data;
       } catch (error) {
         console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async fetchGenres() {
@@ -167,13 +234,39 @@ export default {
         this.genres = data;
       } catch (error) {
         console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
+    async fetchLogs() {
+      try {
+        const { data } = await axios({
+          method: 'get',
+          url: this.baseURL + '/histories',
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+
+        this.logs = data
+      } catch (error) {
+        console.log(error);
+        this.toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
+      }
+    }
   },
   created() {
     if (localStorage.getItem("access_token")) {
       this.fetchMovies();
       this.fetchGenres();
+      this.fetchLogs();
       this.page = localStorage.getItem("lastAccessedPage");
     }
   },
@@ -181,7 +274,7 @@ export default {
     getMovieById() {
       return this.movies.find(movie => movie.id == this.movieId)
     }
-  }
+  },
 }
 </script>
 
@@ -190,9 +283,11 @@ export default {
   <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
   <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus"
-  @editMoviePage="changePage" />
+    @editMoviePage="changePage" />
   <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />
-  <EditMovie v-else-if="page === 'editMovie'" @page="changePage" :movie="getMovieById" :genres="genres" @submitHandler="submitEditMovie" />
+  <Logs v-else-if="page === 'logs'" :logs="logs" @page="changePage" />
+  <EditMovie v-else-if="page === 'editMovie'" @page="changePage" :movie="getMovieById" :genres="genres"
+    @submitHandler="submitEditMovie" />
   <NewMovie v-else @page="changePage" :genres="genres" @submitHandler="submitNewMovie" />
 </template>
 

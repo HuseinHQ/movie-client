@@ -25,8 +25,8 @@ export default {
     changePage(page) {
       this.$emit('page', page)
     },
-    submitHandler() {
-      this.$emit('submitHandler', this.newMovie)
+    submitHandler(newMovie) {
+      this.$emit('submitHandler', newMovie)
     }
   }
 }

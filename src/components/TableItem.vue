@@ -25,7 +25,7 @@ export default {
   <td v-if="page === 'movies'">{{ data.title }}</td>
   <td v-if="page === 'movies'">{{ data.synopsis }}</td>
   <td v-if="page === 'movies'">{{ data.trailerUrl }}</td>
-  <td v-if="page === 'movies'">{{ data.imgUrl }}</td>
+  <td v-if="page === 'movies'"><img :src="data.imgUrl" alt="movie image"></td>
   <td v-if="page === 'movies'">{{ data.rating }}</td>
   <td v-if="page === 'movies'">{{ data.Genre.name }}</td>
   <td v-if="page === 'movies'">{{ data.User.email }}</td>
@@ -40,6 +40,12 @@ export default {
 
   <!-- Genres -->
   <td v-if="page === 'genres'">{{ data.name }}</td>
+
+  <!-- Logs -->
+  <td v-if="page === 'logs'">{{ data.title }}</td>
+  <td v-if="page === 'logs'">{{ data.description }}</td>
+  <td v-if="page === 'logs'">{{ data.createdAt }}</td>
+  <td v-if="page === 'logs'">{{ data.updatedBy }}</td>
 </template>
 
 <style scoped></style>

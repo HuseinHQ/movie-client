@@ -30,8 +30,8 @@ export default {
         <a @click.prevent="changePage('genres')" href="">Genre</a>
       </li>
       <li class="fs-5 side-panel-list d-flex gap-2">
-        <i class="fa-solid fa-user"></i>
-        <a @click.prevent="" href="">Hello, User</a>
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <a @click.prevent="changePage('logs')" href="">Logs</a>
       </li>
       <li class="fs-5 side-panel-list d-flex gap-2">
         <i class="fa-solid fa-right-from-bracket"></i>
