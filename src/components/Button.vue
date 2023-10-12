@@ -1,11 +1,16 @@
 <script>
 export default {
-  props: ['title']
+  props: ['title', 'buttonColor'],
+  data() {
+    return {
+      prevPage: localStorage.getItem('prevPage')
+    }
+  }
 }
 </script>
 
 <template>
-  <button>{{ title }}</button>
+  <button type="submit" :class="'btn rounded w-50 ' + buttonColor">{{ title }}</button>
 </template>
 
 <style scoped></style>

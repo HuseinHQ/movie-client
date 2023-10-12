@@ -32,8 +32,9 @@ export default {
       if(id) {
         this.movieId = id;
       }
+      localStorage.setItem('prevPage', this.page)
       this.page = page;
-      if(!this.page === 'newMovie' && !this.page === 'editMovie') {
+      if(this.page !== 'newMovie' && this.page !== 'editMovie') {
         localStorage.setItem("lastAccessedPage", this.page);
       }
     },
@@ -189,10 +190,10 @@ export default {
   <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
   <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus"
-    @editMoviePage="changePage" />
+  @editMoviePage="changePage" />
   <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />
-  <NewMovie v-else-if="page === 'newMovies'" @page="changePage" :genres="genres" @submitHandler="submitNewMovie" />
-  <EditMovie v-else @page="changePage" :movie="getMovieById" :genres="genres" @submitHandler="submitEditMovie" />
+  <EditMovie v-else-if="page === 'editMovie'" @page="changePage" :movie="getMovieById" :genres="genres" @submitHandler="submitEditMovie" />
+  <NewMovie v-else @page="changePage" :genres="genres" @submitHandler="submitNewMovie" />
 </template>
 
 <style>

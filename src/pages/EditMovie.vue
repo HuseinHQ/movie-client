@@ -33,7 +33,7 @@ export default {
 
       <!-- Bottom content -->
       <div class="bottom d-flex gap-3">
-        <MovieForm :movie="movie" :genres="genres" @submitHandler="submitHandler" />
+        <MovieForm :movie="movie" :genres="genres" @submitHandler="submitHandler" :buttonTitle="['Cancel', 'Submit']" :buttonColor="['btn-outline-warning', 'btn-warning']" />
       </div>
     </div>
   </section>

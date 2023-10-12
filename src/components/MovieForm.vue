@@ -1,6 +1,11 @@
 <script>
+import Button from './Button.vue';
+
 export default {
-  props: ['movie', 'genres'],
+  components: {
+    Button
+  },
+  props: ['movie', 'genres', 'buttonTitle', 'buttonColor'],
   data() {
     return {
       id: this.movie.id,
@@ -19,6 +24,9 @@ export default {
       this.$emit('submitHandler', this.newMovie, this.id)
     }
   },
+  created() {
+    console.log(this.movie)
+  }
 }
 </script>
 
@@ -44,8 +52,9 @@ export default {
         </select>
       </div>
 
-      <div class="mb-3">
-        <button type="submit" class="btn btn-success rounded-5 w-100">Submit</button>
+      <div class="d-flex gap-3">
+        <Button :title="buttonTitle[0]" :buttonColor="buttonColor[0]"/>
+        <Button :title="buttonTitle[1]" :buttonColor="buttonColor[1]"/>
       </div>
     </div>
 

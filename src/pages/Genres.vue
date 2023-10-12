@@ -1,12 +1,12 @@
 <script>
 import SidePanel from '../components/SidePanel.vue'
-import TableRow from '../components/TableRow.vue'
+import TableItem from '../components/TableItem.vue'
 
 export default {
   props: ['datas'],
   components: {
     SidePanel,
-    TableRow
+    TableItem
   },
   data() {
     return {
@@ -44,7 +44,9 @@ export default {
               </tr>
             </thead>
             <tbody>
-              <TableRow :datas="datas" :column="genreTd" />
+              <tr v-for="data, index in datas">
+                <TableItem :data=data :index="index" page="genres" />
+              </tr>
             </tbody>
           </table>
         </div>

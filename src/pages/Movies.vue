@@ -37,7 +37,7 @@ export default {
       <!-- Upper content -->
       <div class="upper d-flex align-items-center justify-content-between">
         <h1>Movie List</h1>
-        <button @click="changePage('newMovies')" class="btn btn-primary">Add Movie</button>
+        <button @click="changePage('newMovie')" class="btn btn-primary">Add Movie</button>
       </div>
 
       <!-- Bottom content -->
