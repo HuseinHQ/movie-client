@@ -32,6 +32,7 @@ export default {
       movies: [],
       genres: [],
       logs: [],
+      user: null,
       movieId: 0
     }
   },
@@ -60,6 +61,7 @@ export default {
         })
 
         this.fetchMovies();
+        this.fetchLogs();
         this.toast.success(data.message, {
           position: "top-right",
           timeout: 2500,
@@ -126,7 +128,6 @@ export default {
         const { access_token } = response.data;
         localStorage.access_token = access_token;
 
-        // this.wipeData(this.registerForm);
         this.fetchMovies();
         this.fetchGenres();
         this.fetchLogs();
@@ -201,6 +202,35 @@ export default {
         });
       }
     },
+    async handleCredentialResponse(response) {
+      try {
+        const res = await axios({
+          method: "post",
+          url: this.baseURL + "/google-login",
+          headers: {
+            google_token: response.credential,
+          },
+        });
+
+        localStorage.setItem("access_token", res.data.access_token);
+        this.fetchMovies();
+        this.fetchGenres();
+        this.fetchLogs();
+        this.changePage("dashboard");
+        this.toast.success("Signed in successfully!", {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
+      } catch (error) {
+        console.log(error);
+        this.toast.error('Failed to login', {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
+      }
+    },
     async fetchMovies() {
       try {
         const { data } = await axios({
@@ -260,6 +290,26 @@ export default {
           pauseOnHover: false,
         });
       }
+    },
+    async fetchUser() {
+      try {
+        const { data } = await axios({
+          method: 'get',
+          url: this.baseURL + '/users',
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+        this.user = data;
+        console.log(this.user);
+      } catch (error) {
+        console.log(error);
+        this.toast.error(`${error.data.message}`, {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
+      }
     }
   },
   created() {
@@ -267,6 +317,7 @@ export default {
       this.fetchMovies();
       this.fetchGenres();
       this.fetchLogs();
+      this.fetchUser();
       this.page = localStorage.getItem("lastAccessedPage");
     }
   },
@@ -279,7 +330,7 @@ export default {
 </script>
 
 <template>
-  <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" />
+  <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" @handleCredentialResponse="handleCredentialResponse" />
   <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
   <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus"

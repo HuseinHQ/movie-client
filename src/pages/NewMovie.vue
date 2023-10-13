@@ -23,11 +23,17 @@ export default {
   },
   methods: {
     changePage(page) {
-      this.$emit('page', page)
+      this.$emit('page', page);
     },
     submitHandler(newMovie) {
-      this.$emit('submitHandler', newMovie)
-    }
+      this.$emit('submitHandler', newMovie);
+      this.wipeData(this.movie);
+    },
+    wipeData(obj) {
+      for (let key in obj) {
+        key = "";
+      }
+    },
   }
 }
 </script>

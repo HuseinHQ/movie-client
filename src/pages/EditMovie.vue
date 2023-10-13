@@ -15,7 +15,13 @@ export default {
     },
     submitHandler(editedMovie, id) {
       this.$emit('submitHandler', editedMovie, id)
-    }
+      this.wipeData(this.movie);
+    },
+    wipeData(obj) {
+      for (let key in obj) {
+        key = "";
+      }
+    },
   },
 }
 </script>

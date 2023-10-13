@@ -28,9 +28,6 @@ export default {
       this.$emit('changePage', page)
     }
   },
-  created() {
-    console.log(this.movie)
-  }
 }
 </script>
 

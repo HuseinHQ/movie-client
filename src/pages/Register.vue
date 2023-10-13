@@ -23,7 +23,7 @@ export default {
       this.wipeData(this.registerForm)
     },
     wipeData(obj) {
-      for (key in obj) {
+      for (let key in obj) {
         key = "";
       }
     },

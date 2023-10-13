@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  emits: ['page', 'submitHandler'],
+  emits: ['page', 'submitHandler', 'handleCredentialResponse'],
   data() {
     return {
       passwordErrorMessage: "",
@@ -52,29 +52,19 @@ export default {
       this.$emit('page', page)
     },
     submitHandler() {
-      this.$emit('submitHandler', this.email, this.password)
+      this.$emit('submitHandler', this.email, this.password);
+      this.wipeData();
     },
-    async handleCredentialResponse(response) {
-      try {
-        const res = await axios({
-          method: "post",
-          url: this.baseURL + "/google-login",
-          headers: {
-            google_token: response.credential,
-          },
-        });
-
-        localStorage.setItem("access_token", res.data.access_token);
-        this.fetchMovies();
-        this.fetchGenres();
-        this.changePage("dashboard");
-      } catch (error) {
-        console.log(error);
-      }
+    handleCredentialResponse(response) {
+      this.$emit('handleCredentialResponse', response)
+    },
+    wipeData() {
+      this.email = "";
+      this.password = "";
     },
   },
   watch: {
-    "email"(newValue, oldValue) {
+    "email"(newValue) {
       if (!newValue.includes("@") || !newValue.includes(".")) {
         this.emailErrorMessage = "Input type is not email";
       } else {
