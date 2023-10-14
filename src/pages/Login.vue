@@ -27,7 +27,7 @@
           </div>
 
           <p class="text-center text-secondary">or Sign in with</p>
-          <div id="buttonDiv" class="d-flex justify-content-center"></div>
+          <GoogleLogin class="d-flex justify-content-center" :callback="googleSign" />
         </form>
         <p class=" text-center mt-5">Don't have an account? <a @click.prevent="changePage('register')" href=""
             class="link-body-emphasis">Sign up</a></p>
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  emits: ['page', 'submitHandler', 'handleCredentialResponse'],
+  emits: ['page', 'submitHandler', 'googleSign'],
   data() {
     return {
       passwordErrorMessage: "",
@@ -55,8 +55,8 @@ export default {
       this.$emit('submitHandler', this.email, this.password);
       this.wipeData();
     },
-    handleCredentialResponse(response) {
-      this.$emit('handleCredentialResponse', response)
+    googleSign(response) {
+      this.$emit('googleSign', response)
     },
     wipeData() {
       this.email = "";
@@ -83,19 +83,6 @@ export default {
       if (!newValue.length) {
         this.passwordErrorMessage = "";
       }
-    }
-  },
-  mounted() {
-    if (localStorage.getItem('lastAccessedPage') === "login" || localStorage.getItem('lastAccessedPage') === "register") {
-      google.accounts.id.initialize({
-        client_id: "782243135980-7dfmhrfqah531g5ob5u200trjrkl0ah2.apps.googleusercontent.com",
-        callback: this.handleCredentialResponse,
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("buttonDiv"),
-        { theme: "outline", size: "large" } // customization attributes
-      );
-      google.accounts.id.prompt(); // also display the One Tap dialog
     }
   },
 }

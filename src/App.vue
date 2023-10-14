@@ -27,7 +27,8 @@ export default {
   },
   data() {
     return {
-      baseURL: "https://movie-server.huseinhk.me",
+      // baseURL: "https://movie-server.huseinhk.me",
+      baseURL: "http://localhost:3000",
       page: "login",
       movies: [],
       genres: [],
@@ -45,6 +46,13 @@ export default {
       this.page = page;
       if (this.page !== 'newMovie' && this.page !== 'editMovie') {
         localStorage.setItem("lastAccessedPage", this.page);
+      }
+      if(page === 'login' && localStorage.getItem('prevPage') !== 'register') {
+        this.toast.info('Logget out successfully', {
+          position: "top-right",
+          timeout: 2500,
+          pauseOnHover: false,
+        });
       }
     },
     async patchMovieStatus(id, status) {
@@ -93,6 +101,7 @@ export default {
         this.fetchMovies();
         this.fetchGenres();
         this.fetchLogs();
+        this.fetchUser();
         this.changePage('dashboard');
         this.toast.success("Signed in successfully!", {
           position: "top-right",
@@ -131,6 +140,7 @@ export default {
         this.fetchMovies();
         this.fetchGenres();
         this.fetchLogs();
+        this.fetchUser();
         this.changePage('dashboard');
         this.toast.success("Signed Up successfully!", {
           position: "top-right",
@@ -202,7 +212,7 @@ export default {
         });
       }
     },
-    async handleCredentialResponse(response) {
+    async googleSign(response) {
       try {
         const res = await axios({
           method: "post",
@@ -216,6 +226,7 @@ export default {
         this.fetchMovies();
         this.fetchGenres();
         this.fetchLogs();
+        this.fetchUser();
         this.changePage("dashboard");
         this.toast.success("Signed in successfully!", {
           position: "top-right",
@@ -244,7 +255,7 @@ export default {
         this.movies = data;
       } catch (error) {
         console.log(error);
-        this.toast.error(`${error.response.data.message}`, {
+        this.toast.error(`${error.data.message}`, {
           position: "top-right",
           timeout: 2500,
           pauseOnHover: false,
@@ -301,7 +312,6 @@ export default {
           }
         })
         this.user = data;
-        console.log(this.user);
       } catch (error) {
         console.log(error);
         this.toast.error(`${error.data.message}`, {
@@ -312,12 +322,13 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     if (localStorage.getItem("access_token")) {
       this.fetchMovies();
       this.fetchGenres();
       this.fetchLogs();
-      this.fetchUser();
+      await this.fetchUser();
+      localStorage.username = this.user.username;
       this.page = localStorage.getItem("lastAccessedPage");
     }
   },
@@ -330,11 +341,11 @@ export default {
 </script>
 
 <template>
-  <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" @handleCredentialResponse="handleCredentialResponse" />
-  <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" />
+  <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" @googleSign="googleSign" />
+  <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" @googleSign="googleSign"/>
   <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
   <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus"
-    @editMoviePage="changePage" />
+    @editMoviePage="changePage" :user="user"/>
   <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />
   <Logs v-else-if="page === 'logs'" :logs="logs" @page="changePage" />
   <EditMovie v-else-if="page === 'editMovie'" @page="changePage" :movie="getMovieById" :genres="genres"

@@ -4,7 +4,7 @@ import TableItem from '../components/TableItem.vue'
 
 export default {
   emits: ['page', 'changeHandler', 'editMoviePage'],
-  props: ['datas'],
+  props: ['datas', 'user'],
   components: {
     SidePanel,
     TableItem
@@ -60,7 +60,7 @@ export default {
             </thead>
             <tbody>
               <tr v-for="data, index in datas" :key="data.id">
-                <TableItem :data=data :index="index" page="movies" @changeHandler="changeHandler" @editMoviePage="editMoviePage" />
+                <TableItem :data=data :index="index" page="movies" @changeHandler="changeHandler" @editMoviePage="editMoviePage" :user="user"/>
               </tr>
             </tbody>
           </table>

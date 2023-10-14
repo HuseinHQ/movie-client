@@ -1,7 +1,7 @@
 <script>
 export default {
   emits: ['changeHandler', 'editMoviePage'],
-  props: ['data', 'index', 'page'],
+  props: ['data', 'index', 'page', 'user'],
   data() {
     return {
       status: this.data.status
@@ -36,7 +36,13 @@ export default {
       <option value="Archived" :selected="data.status ==='Archived'" :disabled="data.status === 'Archived'">Archived</option>
     </select>
   </td>
-  <td v-if="page === 'movies'"><a @click.prevent="editMoviePage('editMovie', data.id)" href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
+  <td v-if="page === 'movies' && (user.role === 'admin' || (user.role !== 'admin' && user.id == data.authorId))"><a @click.prevent="editMoviePage('editMovie', data.id)" href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
+
+  <!-- if(pagehusein@mail.com === 'movies') {
+    if(role !== 'admin') {
+      if(user.id !== data.authorId)
+    } 
+  } -->
 
   <!-- Genres -->
   <td v-if="page === 'genres'">{{ data.name }}</td>

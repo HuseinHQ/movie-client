@@ -1,6 +1,6 @@
 <script>
 export default {
-  emits: ['page', 'submitHandler'],
+  emits: ['page', 'submitHandler', 'googleSign'],
   data() {
     return {
       passwordErrorMessage: "",
@@ -27,6 +27,9 @@ export default {
         key = "";
       }
     },
+    googleSign(response) {
+      this.$emit('googleSign', response)
+    },
   },
   watch: {
     'registerForm.email'(newValue) {
@@ -49,7 +52,7 @@ export default {
         this.passwordErrorMessage = "";
       }
     },
-  }
+  },
 }
 </script>
 
@@ -100,7 +103,7 @@ export default {
           </div>
 
           <p class="text-center text-secondary">or Sign up with</p>
-          <div id="buttonDiv" class="d-flex justify-content-center"></div>
+          <GoogleLogin class="d-flex justify-content-center" :callback="googleSign" />
         </div>
 
         <!-- Bottom div -->
