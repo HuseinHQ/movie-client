@@ -27,8 +27,7 @@ export default {
   },
   data() {
     return {
-      // baseURL: "https://movie-server.huseinhk.me",
-      baseURL: "http://localhost:3000",
+      baseURL: "https://movie-server.huseinhk.me",
       page: "login",
       movies: [],
       genres: [],
