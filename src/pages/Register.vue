@@ -1,6 +1,9 @@
 <script>
+import Button from '../components/Button.vue'
+
 export default {
   emits: ['page', 'submitHandler', 'googleSign'],
+  components: { Button },
   data() {
     return {
       passwordErrorMessage: "",
@@ -99,7 +102,7 @@ export default {
           </div>
 
           <div class="mb-3">
-            <button type="submit" class="btn btn-primary rounded-5 w-100">Register</button>
+            <Button @changePage="changePage" title="Register" buttonColor="btn-primary" class="w-100"/>
           </div>
 
           <p class="text-center text-secondary">or Sign up with</p>

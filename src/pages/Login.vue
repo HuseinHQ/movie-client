@@ -23,7 +23,7 @@
           </div>
 
           <div class="mb-3">
-            <button type="submit" class="btn btn-primary rounded-5 w-100">Login</button>
+            <Button @changePage="changePage" title="Login" buttonColor="btn-primary" class="w-100"/>
           </div>
 
           <p class="text-center text-secondary">or Sign in with</p>
@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import Button from '../components/Button.vue';
+
 export default {
   emits: ['page', 'submitHandler', 'googleSign'],
+  components: { Button },
   data() {
     return {
       passwordErrorMessage: "",
