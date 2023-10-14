@@ -14,6 +14,21 @@ export default {
     editMoviePage(page, id) {
       this.$emit('editMoviePage', page, id)
     }
+  },
+  computed: {
+    dateFormat() {
+      const options = {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+      };
+
+      return new Date(this.data.createdAt).toLocaleString('id-ID', options).replace(/\./g, ':');
+    }
   }
 }
 </script>
@@ -31,18 +46,15 @@ export default {
   <td v-if="page === 'movies'">{{ data.User.email }}</td>
   <td v-if="page === 'movies'">
     <select v-model="status" @change="changeHandler(data.id, status)">
-      <option value="Active" :selected="data.status ==='Active'" :disabled="data.status === 'Active'">Active</option>
-      <option value="Inactive" :selected="data.status ==='Inactive'" :disabled="data.status === 'Inactive'">Inactive</option>
-      <option value="Archived" :selected="data.status ==='Archived'" :disabled="data.status === 'Archived'">Archived</option>
+      <option value="Active" :selected="data.status === 'Active'" :disabled="data.status === 'Active'">Active</option>
+      <option value="Inactive" :selected="data.status === 'Inactive'" :disabled="data.status === 'Inactive'">Inactive
+      </option>
+      <option value="Archived" :selected="data.status === 'Archived'" :disabled="data.status === 'Archived'">Archived
+      </option>
     </select>
   </td>
-  <td v-if="page === 'movies' && (user.role === 'admin' || (user.role !== 'admin' && user.id == data.authorId))"><a @click.prevent="editMoviePage('editMovie', data.id)" href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
-
-  <!-- if(pagehusein@mail.com === 'movies') {
-    if(role !== 'admin') {
-      if(user.id !== data.authorId)
-    } 
-  } -->
+  <td v-if="page === 'movies' && (user.role === 'admin' || (user.role !== 'admin' && user.id == data.authorId))"><a
+      @click.prevent="editMoviePage('editMovie', data.id)" href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
 
   <!-- Genres -->
   <td v-if="page === 'genres'">{{ data.name }}</td>
@@ -50,7 +62,7 @@ export default {
   <!-- Logs -->
   <td v-if="page === 'logs'">{{ data.title }}</td>
   <td v-if="page === 'logs'">{{ data.description }}</td>
-  <td v-if="page === 'logs'">{{ data.createdAt }}</td>
+  <td v-if="page === 'logs'">{{ dateFormat }}</td>
   <td v-if="page === 'logs'">{{ data.updatedBy }}</td>
 </template>
 
