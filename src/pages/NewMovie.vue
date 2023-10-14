@@ -9,18 +9,6 @@ export default {
     SidePanel,
     MovieForm
   },
-  data() {
-    return {
-      movie: {
-        title: "",
-        synopsis: "",
-        genreId: "",
-        rating: null,
-        trailerUrl: "",
-        imgUrl: "",
-      },
-    }
-  },
   methods: {
     changePage(page) {
       this.$emit('page', page);
@@ -52,7 +40,7 @@ export default {
 
       <!-- Bottom content -->
       <div class="bottom d-flex gap-3">
-        <MovieForm @changePage="changePage" :movie="movie" :genres="genres" @submitHandler="submitHandler" :buttonTitle="['Cancel', 'Add']" :buttonColor="['btn-outline-primary', 'btn-primary']" />
+        <MovieForm @changePage="changePage" :genres="genres" @submitHandler="submitHandler" :buttonTitle="['Cancel', 'Add']" :buttonColor="['btn-outline-primary', 'btn-primary']" />
       </div>
     </div>
   </section>

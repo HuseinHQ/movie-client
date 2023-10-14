@@ -9,14 +9,14 @@ export default {
   props: ['movie', 'genres', 'buttonTitle', 'buttonColor'],
   data() {
     return {
-      id: this.movie.id,
+      id: this.movie ? this.movie.id : null,
       newMovie: {
-        title: this.movie.title,
-        synopsis: this.movie.synopsis,
-        genreId: this.movie.genreId,
-        rating: this.movie.rating,
-        trailerUrl: this.movie.trailerUrl,
-        imgUrl: this.movie.imgUrl,
+        title: this.movie ? this.movie.title : "",
+        synopsis: this.movie ? this.movie.synopsis : "",
+        genreId: this.movie ? this.movie.genreId : 0,
+        rating: this.movie ? this.movie.rating : null,
+        trailerUrl: this.movie ? this.movie.trailerUrl : "",
+        imgUrl: this.movie ? this.movie.imgUrl : "",
       },
     }
   },
@@ -28,6 +28,17 @@ export default {
       this.$emit('changePage', page)
     }
   },
+  // uncreated() {
+  //   if(!this.movie) {
+  //     this.id = null;
+  //     this.newMovie.title = "";
+  //     this.newMovie.synopsis = "";
+  //     this.newMovie.genreId = 0;
+  //     this.newMovie.rating = null;
+  //     this.newMovie.trailerUrl = "";
+  //     this.newMovie.imgUrl = ""
+  //   }
+  // }
 }
 </script>
 
@@ -48,8 +59,8 @@ export default {
       <div class="mb-5">
         <label class="form-label">Genre</label>
         <select v-model="newMovie.genreId" class="form-select">
-          <option selected disabled>-- Select Genre --</option>
-          <option v-for="genre in genres" :value="genre.id" :selected="genre.id == movie.genreId">{{ genre.name }}</option>
+          <option value="0" selected disabled>-- Select Genre --</option>
+          <option v-for="genre in genres" :value="genre.id" :selected="genre.id == newMovie.genreId">{{ genre.name }}</option>
         </select>
       </div>
 
