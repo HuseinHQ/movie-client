@@ -2,7 +2,7 @@
 import SidePanel from '../components/SidePanel.vue'
 export default {
   emits: ['page'],
-  props: ['movies', 'genres'],
+  props: ['movies', 'genres', 'user'],
   components: {
     SidePanel
   },
@@ -25,7 +25,7 @@ export default {
 <template>
   <section id="dashboard-section" class="d-flex">
     <!-- Side Panel -->
-    <SidePanel @page="changePage" />
+    <SidePanel @page="changePage" :user="user" />
 
     <!-- Content -->
     <div id="content">

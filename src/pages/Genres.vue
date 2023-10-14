@@ -4,7 +4,7 @@ import TableItem from '../components/TableItem.vue'
 
 export default {
   emits: ['page'],
-  props: ['datas'],
+  props: ['datas', 'user'],
   components: {
     SidePanel,
     TableItem
@@ -25,7 +25,7 @@ export default {
 <template>
     <section id="dashboard-section" class="d-flex">
     <!-- Side Panel -->
-    <SidePanel @page="changePage" />
+    <SidePanel @page="changePage" :user="user" />
 
     <!-- Content -->
     <div id="content">

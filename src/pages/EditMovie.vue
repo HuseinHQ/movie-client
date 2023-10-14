@@ -4,7 +4,7 @@ import MovieForm from '../components/MovieForm.vue'
 
 export default {
   emits: ['page', 'submitHandler'],
-  props: ['movie', 'genres'],
+  props: ['movie', 'genres', 'user'],
   components: {
     SidePanel,
     MovieForm
@@ -29,7 +29,7 @@ export default {
 <template>
   <section id="new-edit-section" class="d-flex">
     <!-- Side Panel -->
-    <SidePanel @page="changePage" />
+    <SidePanel @page="changePage" :user="user" />
 
     <!-- Content -->
     <div id="content">

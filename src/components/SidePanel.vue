@@ -1,6 +1,7 @@
 <script>
 export default {
   emits: ['page'],
+  props: ['user'],
   methods: {
     changePage(page) {
       this.$emit('page', page)
@@ -12,7 +13,7 @@ export default {
   },
   computed: {
     username() {
-      return localStorage.getItem('username').split(' ')[0]
+      return this.user.username.split(' ')[0]
     },
     page() {
       return localStorage.getItem('lastAccessedPage');
@@ -45,9 +46,18 @@ export default {
         <i class="fa-solid fa-right-from-bracket"></i>
         <a @click.prevent="logout('login')" href="">Log Out</a>
       </li>
-      <li class="fs-5 side-panel-list d-flex gap-2" style="margin-top: 19rem">
+    </ul>
+
+    <ul class="d-flex flex-column gap-3 mt-auto mb-5">
+      <li class="fs-5 side-panel-list d-flex gap-2">
         <i class="fa-solid fa-user"></i>
         <a @click.prevent="" href="">{{ username }}</a>
+        <br>
+      </li>
+      <li class="fs-5 side-panel-list d-flex gap-2">
+        <i class="fa-solid fa-dice"></i>
+        <a @click.prevent="" href="">{{ user.role }}</a>
+        <br>
       </li>
     </ul>
   </div>

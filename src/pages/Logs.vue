@@ -4,7 +4,7 @@ import TableItem from '../components/TableItem.vue'
 
 export default {
   emits: ['page'],
-  props: ['logs'],
+  props: ['logs', 'user'],
   components: {
     SidePanel,
     TableItem
@@ -20,7 +20,7 @@ export default {
 <template>
   <section id="logs-section" class="d-flex">
     <!-- Side Panel -->
-    <SidePanel @page="changePage" />
+    <SidePanel @page="changePage" :user="user" />
 
     <!-- Content -->
     <div id="content">

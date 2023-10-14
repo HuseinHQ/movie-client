@@ -323,11 +323,10 @@ export default {
   },
   async created() {
     if (localStorage.getItem("access_token")) {
-      this.fetchMovies();
-      this.fetchGenres();
-      this.fetchLogs();
+      await this.fetchMovies();
+      await this.fetchGenres();
+      await this.fetchLogs();
       await this.fetchUser();
-      localStorage.username = this.user.username;
       this.page = localStorage.getItem("lastAccessedPage");
     }
   },
@@ -342,14 +341,14 @@ export default {
 <template>
   <Login v-if="page === 'login'" @submitHandler="submitLoginForm" @page="changePage" @googleSign="googleSign" />
   <Register v-else-if="page === 'register'" @submitHandler="submitRegisterForm" @page="changePage" @googleSign="googleSign"/>
-  <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" />
+  <Dashboard v-else-if="page === 'dashboard'" :movies="movies" :genres="genres" @page="changePage" :user="user" />
   <Movies v-else-if="page === 'movies'" @page="changePage" :datas="movies" @changeHandler="patchMovieStatus"
     @editMoviePage="changePage" :user="user"/>
-  <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" />
-  <Logs v-else-if="page === 'logs'" :logs="logs" @page="changePage" />
+  <Genres v-else-if="page === 'genres'" @page="changePage" :datas="genres" :user="user" />
+  <Logs v-else-if="page === 'logs'" :logs="logs" @page="changePage" :user="user" />
   <EditMovie v-else-if="page === 'editMovie'" @page="changePage" :movie="getMovieById" :genres="genres"
-    @submitHandler="submitEditMovie" />
-  <NewMovie v-else @page="changePage" :genres="genres" @submitHandler="submitNewMovie" />
+    @submitHandler="submitEditMovie" :user="user" />
+  <NewMovie v-else @page="changePage" :genres="genres" @submitHandler="submitNewMovie" :user="user" />
 </template>
 
 <style>

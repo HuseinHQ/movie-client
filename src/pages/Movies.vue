@@ -31,7 +31,7 @@ export default {
 <template>
     <section id="dashboard-section" class="d-flex">
     <!-- Side Panel -->
-    <SidePanel @page="changePage" />
+    <SidePanel @page="changePage" :user="user" />
 
     <!-- Content -->
     <div id="content">
