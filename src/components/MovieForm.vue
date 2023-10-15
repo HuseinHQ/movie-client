@@ -28,17 +28,6 @@ export default {
       this.$emit('changePage', page)
     }
   },
-  // uncreated() {
-  //   if(!this.movie) {
-  //     this.id = null;
-  //     this.newMovie.title = "";
-  //     this.newMovie.synopsis = "";
-  //     this.newMovie.genreId = 0;
-  //     this.newMovie.rating = null;
-  //     this.newMovie.trailerUrl = "";
-  //     this.newMovie.imgUrl = ""
-  //   }
-  // }
 }
 </script>
 
@@ -60,7 +49,7 @@ export default {
         <label class="form-label">Genre</label>
         <select v-model="newMovie.genreId" class="form-select">
           <option value="0" selected disabled>-- Select Genre --</option>
-          <option v-for="genre in genres" :value="genre.id" :selected="genre.id == newMovie.genreId">{{ genre.name }}</option>
+          <option v-for="genre in genres" :value="genre.id">{{ genre.name }}</option>
         </select>
       </div>
 
